@@ -173,129 +173,145 @@
     klass="vh-100"
 >
     <div class="p-4 container-fluid vw-100 vh-100 d-flex flex-column justify-content-around">
-        <div class="form-floating mb-3">
-            <textarea
-                class="form-control"
-                id="input"
-                name="input"
-            ></textarea>
-            <label
-                class="form-label"
-                for="input"
-            >Input</label>
-        </div>
+        <fieldset>
+            <legend>Text to process</legend>
+            <div class="form-floating mb-3">
+                <textarea
+                    class="form-control"
+                    id="input"
+                    name="input"
+                ></textarea>
+                <label
+                    class="form-label"
+                    for="input"
+                >Input</label>
+            </div>
+        </fieldset>
 
-        <div class="form-floating mb-3">
-            <textarea
-                class="form-control"
-                id="regex"
-                name="regex"
-            ></textarea>
-            <label
-                class="form-label"
-                for="regex"
-            >Regular expression</label>
-        </div>
+        <fieldset>
+            <legend>Regular expression</legend>
 
-        <div class="form mb-3">
-            <input
-                class="form-check-input"
-                type="checkbox"
-                name="global"
-                id="global"
-            />
-            <label
-                class="form-check-label"
-                for="global"
-            >Global</label>
+            <div class="form-floating mb-3">
+                <textarea
+                    class="form-control"
+                    id="regex"
+                    name="regex"
+                ></textarea>
+                <label
+                    class="form-label"
+                    for="regex"
+                >Regular expression</label>
+            </div>
 
-            <input
-                class="form-check-input"
-                type="checkbox"
-                name="multiline"
-                id="multiline"
-            />
-            <label
-                class="form-check-label"
-                for="multiline"
-            >Multiline</label>
+            <div class="form mb-3">
+                <input
+                    class="form-check-input"
+                    type="checkbox"
+                    name="global"
+                    id="global"
+                />
+                <label
+                    class="form-check-label"
+                    for="global"
+                >Global</label>
 
-            <input
-                class="form-check-input"
-                type="checkbox"
-                name="ignorecase"
-                id="ignorecase"
-            />
-            <label
-                class="form-check-label"
-                for="ignorecase"
-            >Ignorecase</label>
-        </div>
+                <input
+                    class="form-check-input"
+                    type="checkbox"
+                    name="multiline"
+                    id="multiline"
+                />
+                <label
+                    class="form-check-label"
+                    for="multiline"
+                >Multiline</label>
 
-        <div class="form-floating mb-3">
-            <input
-                class="form-control"
-                id="extraction"
-                name="extraction"
-                type="text"
-                value="${match[0]}"
-            />
-            <label
-                class="form-label"
-                for="extraction"
-            >Expression for extraction (variable name match)</label>
-        </div>
+                <input
+                    class="form-check-input"
+                    type="checkbox"
+                    name="ignorecase"
+                    id="ignorecase"
+                />
+                <label
+                    class="form-check-label"
+                    for="ignorecase"
+                >Ignorecase</label>
+            </div>
+        </fieldset>
 
-        <div class="form mb-3">
-            <input
-                class="form-check-input"
-                type="checkbox"
-                name="unique"
-                id="unique"
-            />
-            <label
-                class="form-check-label"
-                for="unique"
-            >Unique</label>
+        <fieldset>
+            <legend>Template</legend>
+            <div class="form-floating mb-3">
+                <input
+                    class="form-control"
+                    id="extraction"
+                    name="extraction"
+                    type="text"
+                    value="${match[0]}"
+                />
+                <label
+                    class="form-label"
+                    for="extraction"
+                >Expression for extraction (variable name match)</label>
+            </div>
 
-            <input
-                class="form-check-input"
-                type="checkbox"
-                name="sort"
-                id="sort"
-            />
-            <label
-                class="form-check-label"
-                for="sort"
-            >Sort</label>
-        </div>
+            <div class="form mb-3">
+                <input
+                    class="form-check-input"
+                    type="checkbox"
+                    name="unique"
+                    id="unique"
+                />
+                <label
+                    class="form-check-label"
+                    for="unique"
+                >Unique</label>
 
-        <div class="form-floating mb-3">
-            <input
-                class="form-control"
-                id="output-exp"
-                name="output-exp"
-                type="text"
-                value="${item}"
-            />
-            <label
-                class="form-label"
-                for="output-exp"
-            >Expression for output (variable name item)</label>
-        </div>
-        <div class="form-floating mb-3 flex-fill flex-grow-1 ">
-            <textarea
-                style="height: 100%;"
-                class="form-control"
-                id="output"
-                name="output"
-                readonly
-            ></textarea>
-            <label
-                class="form-label"
-                for="output"
-            >Output</label>
-        </div>
+                <input
+                    class="form-check-input"
+                    type="checkbox"
+                    name="sort"
+                    id="sort"
+                />
+                <label
+                    class="form-check-label"
+                    for="sort"
+                >Sort</label>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input
+                    class="form-control"
+                    id="output-exp"
+                    name="output-exp"
+                    type="text"
+                    value="${item}"
+                />
+                <label
+                    class="form-label"
+                    for="output-exp"
+                >Expression for output (variable name item)</label>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>Output</legend>
+
+            <div class="form-floating mb-3 flex-fill flex-grow-1 ">
+                <textarea
+                    style="height: 100%;"
+                    class="form-control"
+                    id="output"
+                    name="output"
+                    readonly
+                ></textarea>
+                <label
+                    class="form-label"
+                    for="output"
+                >Output</label>
+            </div>
+        </fieldset>
+    </div>
     </div>
 </body>
 
