@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Bootstrap 5 example</title>
+    <meta charset="UTF-8" />
+    <meta
+        name="viewport"
+        content="width=device-width"
+    />
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+        crossorigin="anonymous"
+    >
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"
+    ></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('onload');
+            const regex = document.getElementById('regex');
+            const unique = document.getElementById('unique');
+            const input = document.getElementById('input');
+            const output = document.getElementById('output');
+            const global = document.getElementById('global');
+            const multiline = document.getElementById('multiline');
+            const ignorecase = document.getElementById('ignorecase');
+            const extraction = document.getElementById('extraction');
+            const outputExp = document.getElementById('output-exp');
+            const sort = document.getElementById('sort');
+            [regex,
+                input,
+                global,
+                multiline,
+                ignorecase,
+                extraction,
+                unique,
+                outputExp,
+                sort].forEach(el => {
+                    el.addEventListener('change', (evt) => {
+                        console.log(el.name + '.value', el.value);
+                        act({
+                            regex,
+                            unique,
+                            input,
+                            output,
+                            global,
+                            multiline,
+                            ignorecase,
+                            extraction,
+                            outputExp,
+                            sort
+                        });
+                    });
+                });
+        });
+
+        function getOptions({ global, multiline, ignorecase }) {
+            const options = [];
+            if (global.checked) {
+                options.push('g');
+            }
+
+            if (multiline.checked) {
+                options.push('m');
+            }
+
+            if (ignorecase.checked) {
+                options.push('i');
+            }
+
+            const rv = options.join('');
+            return rv;
+        }
+
+        function act({ regex,
+            unique,
+            input,
+            output,
+            global,
+            multiline,
+            ignorecase,
+            extraction,
+            outputExp,
+            sort }) {
+            const val = input.value;
+            const options = getOptions({
+                global,
+                multiline,
+                ignorecase,
+
+            });
+            const data = calculate({
+                regex: regex.value.split('\n').join(''),
+                options,
+                value: input.value,
+                extraction: extraction.value,
+            });
+
+            let value = '';
+            if (data) {
+                let aux;
+                if (unique.checked) {
+                    aux = Array.from(new Set(data));
+                } else {
+                    aux = data;
+                }
+
+                if(sort.checked){
+                    aux.sort();
+                }
+
+                if (outputExp.value) {
+                    const template = assemble(outputExp.value, 'item');
+                    value = aux.map(item => template(item)).join('');
+                } else {
+                    value = aux.join('');
+                }
+            }
+
+            output.value = value;
+        }
+
+        function calculate({ regex, options, value, extraction }) {
+            let rv = null;
+            if (isString(value) && isString(regex)) {
+                const re = new RegExp(regex, options);
+                console.log('re', re);
+                const template = assemble(extraction, 'match');
+                let match = re.exec(value);
+                if (match) {
+                    rv = [];
+                }
+
+                if (options.indexOf('g') > -1) {
+                    while (match) {
+                        console.log('match', match);
+                        rv = rv.concat(template(match));
+                        match = re.exec(value);
+                    }
+                } else {
+                    rv = rv.concat(template(match));
+                }
+
+            }
+
+            return rv;
+        }
+
+        function isString(value) {
+            return typeof value === 'string' && value.length;
+        }
+
+        function assemble(literal, params) {
+            return new Function(params, "return `" + literal + "`;");
+        }
+    </script>
+    <style type="">
+        textarea {
+            min-height: 250px !important;
+        }
+    </style>
+</head>
+
+<body class="p-4">
+    <div class="form mb-3">
+        <label
+            class="form-label"
+            for="regex"
+        >Regex</label>
+
+        <textarea
+            class="form-control"
+            id="regex"
+            name="regex"
+            rows="10"
+        ></textarea>
+    </div>
+
+    <div class="form mb-3">
+        <input
+            class="form-check-input"
+            type="checkbox"
+            name="global"
+            id="global"
+        />
+        <label
+            class="form-check-label"
+            for="global"
+        >Global</label>
+
+        <input
+            class="form-check-input"
+            type="checkbox"
+            name="multiline"
+            id="multiline"
+        />
+        <label
+            class="form-check-label"
+            for="multiline"
+        >Multiline</label>
+
+        <input
+            class="form-check-input"
+            type="checkbox"
+            name="ignorecase"
+            id="ignorecase"
+        />
+        <label
+            class="form-check-label"
+            for="ignorecase"
+        >Ignorecase</label>
+    </div>
+
+    <div class="form-floating mb-3">
+        <input
+            class="form-control"
+            id="extraction"
+            name="extraction"
+            type="text"
+            value="${match[0]}"
+        />
+        <label
+            class="form-label"
+            for="extraction"
+        >Expression for extraction</label>
+    </div>
+
+    <div class="form mb-3">
+        <input
+            class="form-check-input"
+            type="checkbox"
+            name="unique"
+            id="unique"
+        />
+        <label
+            class="form-check-label"
+            for="unique"
+        >Unique</label>
+
+        <input
+            class="form-check-input"
+            type="checkbox"
+            name="sort"
+            id="sort"
+        />
+        <label
+            class="form-check-label"
+            for="sort"
+        >Sort</label>
+    </div>
+
+    <div class="form mb-3">
+        <label
+            class="form-label"
+            for="input"
+        >Input</label>
+        <textarea
+            class="form-control"
+            id="input"
+            name="input"
+            rows="10"
+        ></textarea>
+    </div>
+
+    <div class="form-floating mb-3">
+        <input
+            class="form-control"
+            id="output-exp"
+            name="output-exp"
+            type="text"
+            value="${item}"
+        />
+        <label
+            class="form-label"
+            for="output-exp"
+        >Expression for output</label>
+    </div>
+    <div class="form mb-3">
+        <label
+            class="form-label"
+            for="output"
+        >Output</label>
+        <textarea
+            class="form-control"
+            id="output"
+            name="output"
+            rows="10"
+            readonly
+        ></textarea>
+
+    </div>
+</body>
+
+</html>
