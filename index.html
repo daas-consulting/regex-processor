@@ -110,7 +110,7 @@
                     aux = data;
                 }
 
-                if(sort.checked){
+                if (sort.checked) {
                     aux.sort();
                 }
 
@@ -161,24 +161,22 @@
     </script>
     <style type="">
         textarea {
-            min-height: 250px !important;
+            min-height: 150px !important;
         }
     </style>
 </head>
 
 <body class="p-4">
-    <div class="form mb-3">
-        <label
-            class="form-label"
-            for="regex"
-        >Regex</label>
-
+    <div class="form-floating mb-3">
         <textarea
             class="form-control"
             id="regex"
             name="regex"
-            rows="10"
         ></textarea>
+        <label
+            class="form-label"
+            for="regex"
+        >Regex</label>
     </div>
 
     <div class="form mb-3">
@@ -254,17 +252,16 @@
         >Sort</label>
     </div>
 
-    <div class="form mb-3">
-        <label
-            class="form-label"
-            for="input"
-        >Input</label>
+    <div class="form-floating mb-3">
         <textarea
             class="form-control"
             id="input"
             name="input"
-            rows="10"
         ></textarea>
+        <label
+            class="form-label"
+            for="input"
+        >Input</label>
     </div>
 
     <div class="form-floating mb-3">
@@ -280,19 +277,17 @@
             for="output-exp"
         >Expression for output</label>
     </div>
-    <div class="form mb-3">
-        <label
-            class="form-label"
-            for="output"
-        >Output</label>
+    <div class="form-floating mb-3">
         <textarea
             class="form-control"
             id="output"
             name="output"
-            rows="10"
             readonly
         ></textarea>
-
+        <label
+            class="form-label"
+            for="output"
+        >Output</label>
     </div>
 </body>
 
